@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"go-echo/logger"
+	"go-echo/users"
 	"net/http"
 	"os"
 
@@ -33,13 +34,20 @@ func Start() {
 		logger.Fatal("Error connection")
 	}
 
-	fmt.Println("DB", db)
+	// initialize db
+	userRepoDB := users.NewUserRepositoryDB(db)
+
+	// initialize service
+	userService := users.NewUserService(userRepoDB)
+
+	// initialize handler
+	userHandler := users.NewUserHandler(*userService)
 
 	// initialize router echo
 	e := echo.New()
 	api := e.Group("/api/v1")
 	api.GET("/users", TestConnectionFunctionUsers)
-	fmt.Println("api", api)
+	api.POST("/users", userHandler.RegisterUser)
 
 	// start server echo
 	start := fmt.Sprintf(":%v", serverPort)

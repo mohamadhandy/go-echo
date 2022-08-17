@@ -1,6 +1,4 @@
-package dto
-
-import "go-echo/users"
+package users
 
 type DTOUser struct {
 	ID         int    `json:"user_id"`
@@ -11,7 +9,7 @@ type DTOUser struct {
 	ImageURL   string `json:"image_url"`
 }
 
-func FormatUser(user users.User, token string) DTOUser {
+func FormatUser(user User, token string) DTOUser {
 	dtoUser := DTOUser{
 		ID:         user.ID,
 		Name:       user.Name,

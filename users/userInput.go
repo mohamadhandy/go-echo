@@ -10,4 +10,5 @@ type RegisterUserInput struct {
 	Name       string `json:"name" binding:"required"`
 	Occupation string `json:"occupation" binding:"required"`
 	Password   string `json:"password" binding:"required"`
+	Role       string `json:"role" binding:"required"`
 }
